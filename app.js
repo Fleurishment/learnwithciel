@@ -5,7 +5,6 @@ const GEMINI_MODELS = [
     'gemini-2.5-flash',
     'gemini-3.5-flash',
     'gemini-3.1-flash-lite',
-    'gemini-2.5-flash-lite',
     'gemini-3-flash',
     'gemma-4-26b-it',
     'gemma-4-31b-it'
@@ -15,7 +14,6 @@ const MODEL_META = {
     'gemini-2.5-flash': { abbr: 'g2.5f', limit: 20 },
     'gemini-3.5-flash': { abbr: 'g3.5f', limit: 20 },
     'gemini-3.1-flash-lite': { abbr: 'g3.1fl', limit: 20 },
-    'gemini-2.5-flash-lite': { abbr: 'g2.5fl', limit: 20 },
     'gemini-3-flash': { abbr: 'g3f', limit: 20 },
     'gemma-4-26b-it': { abbr: 'g4-26b', limit: 1500 },
     'gemma-4-31b-it': { abbr: 'g4-31b', limit: 1500 }
