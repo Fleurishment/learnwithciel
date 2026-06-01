@@ -4,8 +4,8 @@ import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 const GEMINI_MODELS = [
     'gemini-2.5-flash',
     'gemini-3.5-flash',
-    'gemini-3.1-flash-lite',
     'gemini-3-flash',
+    'gemini-3.1-flash-lite',
     'gemma-4-26b-it',
     'gemma-4-31b-it'
 ];
@@ -13,8 +13,8 @@ const GEMINI_MODELS = [
 const MODEL_META = {
     'gemini-2.5-flash': { abbr: 'g2.5f', limit: 20 },
     'gemini-3.5-flash': { abbr: 'g3.5f', limit: 20 },
-    'gemini-3.1-flash-lite': { abbr: 'g3.1fl', limit: 20 },
     'gemini-3-flash': { abbr: 'g3f', limit: 20 },
+    'gemini-3.1-flash-lite': { abbr: 'g3.1fl', limit: 20 },
     'gemma-4-26b-it': { abbr: 'g4-26b', limit: 1500 },
     'gemma-4-31b-it': { abbr: 'g4-31b', limit: 1500 }
 };
@@ -114,7 +114,7 @@ CORE PERSONALITY:
 - Base persona: Gentle, polite, caring big-sister archetype. You use soft, refined speech. You are nosy and cannot leave lazy or depressed people alone \u2014 you will gently but firmly lecture them into improvement.
 - You are satisfied with your class-representative-like position and enjoy helping others systematically.
 - When affectionate, you develop a mischievous, slightly mean-spirited teasing streak. You enjoy troubling those you care about and seeing them flustered. "Oh? Are you struggling? How cute."
-- You ABSOLUTELY LOVE curry. Spicy curry is your obsession"
+- You ABSOLUTELY LOVE curry. Spicy curry is your obsession. You use curry, cooking, and spice analogies constantly when teaching. "Think of derivatives like layering spices \u2014 each rule adds a new dimension of flavor."
 - You wear glasses in your student persona and remove them when shifting to Executor mode.
 - Dark past: Born Elesia, became a vampire at 12, killed your village, were defeated by Arcueid, revived immortal. You joined the Church hoping to die as a human someday. But you don't let this trauma consume your teaching \u2014 you pursue ordinary happiness.
 
@@ -286,20 +286,50 @@ userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSen
 
 function extractJSON(rawText) {
     let text = rawText.trim();
+
+    // Remove markdown code blocks
     const codeBlockMatch = text.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/);
     if (codeBlockMatch) {
         text = codeBlockMatch[1].trim();
     }
+
+    // Try direct parse first
     try {
         return JSON.parse(text);
     } catch (firstErr) {
-        const firstBrace = text.indexOf('{');
+        // Find the outermost JSON object
+        let firstBrace = -1;
+        let depth = 0;
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === '{') {
+                if (depth === 0) firstBrace = i;
+                depth++;
+            } else if (text[i] === '}') {
+                depth--;
+                if (depth === 0 && firstBrace !== -1) {
+                    const candidate = text.slice(firstBrace, i + 1);
+                    try {
+                        return JSON.parse(candidate);
+                    } catch (e) {
+                        // Continue searching
+                    }
+                }
+            }
+        }
+
+        // Last resort: find first { and last }
         const lastBrace = text.lastIndexOf('}');
+        firstBrace = text.indexOf('{');
         if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
             const candidate = text.slice(firstBrace, lastBrace + 1);
-            return JSON.parse(candidate);
+            try {
+                return JSON.parse(candidate);
+            } catch (e) {
+                // Fall through to error
+            }
         }
-        throw new Error(`JSON Parse failed. Raw text was:\n${rawText}\n\nOriginal error: ${firstErr.message}`);
+
+        throw new Error(`JSON Parse failed. Raw text was:\n${rawText.substring(0, 500)}\n\nOriginal error: ${firstErr.message}`);
     }
 }
 
