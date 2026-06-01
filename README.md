@@ -2,8 +2,6 @@
 
 A fully interactive, AI-powered learning companion featuring Ciel and Neco-Arc from TYPE-MOON's *Tsukihime -A piece of blue glass moon-*. Study any topic through engaging visual novel-style conversations powered by Google's Gemini AI.
 
-![Ciel-Sensei Classroom](preview.png)
-
 ## Features
 
 - **AI Tutor**: Powered by Google's Gemini with automatic model rotation for reliability
@@ -31,23 +29,6 @@ A fully interactive, AI-powered learning companion featuring Ciel and Neco-Arc f
 - KaTeX for math rendering
 - PDF.js for PDF text extraction
 - Cloudflare Tunnel / ngrok for mobile testing
-
-## File Structure
-
-```
-/
-├── index.html      # Main HTML structure
-├── styles.css      # All styling + mobile responsive rules
-├── app.js          # Application logic, AI integration, character system
-└── images/         # Character sprites and background assets
-    ├── ciel_normal.png
-    ├── ciel_happy.png
-    ├── ciel_shock.png
-    ├── neco_normal.png
-    ├── neco_smug.png
-    ├── neco_chaos.png
-    └── classroom_bg.jpg
-```
 
 ## Mobile Testing
 
@@ -95,4 +76,5 @@ This project is provided as-is for educational purposes. Character assets belong
 
 ---
 
-*"My my, let's study hard... and perhaps celebrate with some spicy curry later."* — Ciel
+NOTE:
+This project was just used to prototype AI API integration. Youre better off going to other sites like these if  youre really that serious about studying.., If it helps your grades get better somehow then im glad that this site helped lol
