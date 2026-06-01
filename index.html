@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teach Me, Ciel-Sensei!</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <style>
+        /* Critical mobile fallback — ensures sprites are visible even if external CSS cached */
+        @media (max-width: 768px) {
+            #ciel-sprite { width: 55vw !important; height: 50vh !important; left: auto !important; right: -8vw !important; bottom: 0 !important; transform: none !important; background-position: bottom right !important; }
+            #neco-sprite { width: 40vw !important; height: 35vh !important; left: -5vw !important; right: auto !important; bottom: 0 !important; }
+            .stage { height: 55vh !important; bottom: 24vh !important; }
+            #scene-main #blackboard-zone { top: 65px !important; left: 3% !important; right: 3% !important; width: auto !important; height: 32vh !important; min-height: 180px !important; -webkit-overflow-scrolling: touch !important; touch-action: pan-y !important; overflow-y: auto !important; z-index: 3 !important; pointer-events: auto !important; }
+            #dialog-box { height: auto !important; min-height: 26vh !important; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important; }
+            #input-container { flex-shrink: 0 !important; min-height: 44px !important; }
+            #config-panel { top: 8px !important; left: 50% !important; transform: translateX(-50%) !important; width: 96% !important; flex-wrap: wrap !important; }
+        }
+        @media (min-width: 360px) and (max-width: 450px) and (min-height: 800px) {
+            #ciel-sprite { width: 58vw !important; height: 52vh !important; right: -12vw !important; bottom: 2vh !important; }
+            #neco-sprite { width: 42vw !important; height: 38vh !important; left: -8vw !important; bottom: 2vh !important; }
+            .stage { height: 58vh !important; bottom: 22vh !important; }
+            #scene-main #blackboard-zone { top: 55px !important; height: 28vh !important; min-height: 200px !important; -webkit-overflow-scrolling: touch !important; touch-action: pan-y !important; overflow-y: auto !important; z-index: 3 !important; pointer-events: auto !important; }
+            #dialog-box { min-height: 22vh !important; max-height: 24vh !important; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<base target="_blank">
+</head>
+<body>
+
+    <div id="game-container">
+        <div class="classroom-bg"></div>
+
+        <div id="scene-main" class="scene active">
+            <div id="blackboard-zone">
+                <div class="board-header">Ciel/Neco Arc Classroom</div>
+                <div id="board-content">
+                    <h2>System Status: Not Registered</h2>
+                    <p>Enter Your ID (API) above to attend this session</p>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="stage">
+            <div id="ciel-sprite" class="sprite active normal"></div>
+            <div id="neco-sprite" class="sprite normal"></div>
+        </div>
+
+        <div id="config-panel">
+            <input type="password" id="api-key" placeholder="Enter API Key..." />
+            <button id="save-key-btn">Take Attendance</button>
+            <button id="help-btn" title="How to get an API key">?</button>
+        </div>
+
+        <div id="study-panel">
+            <div class="control-group">
+                <label for="image-upload" class="custom-file-upload"> Upload Image/Notes/PDF</label>
+                <input type="file" id="image-upload" accept="image/*,.pdf" />
+                <span id="file-name">No file selected</span>
+            </div>
+
+            <div class="control-group">
+                <label class="panel-label">Study Mode Strategy:</label>
+                <select id="study-mode">
+                    <option value="guide"> General Lesson & Study Guide</option>
+                    <option value="flashcard"> Flashcard Active Recall</option>
+                    
+                    <option value="reverse"> Reverse Tutor (Teach the AI)</option>
+                    <option value="socratic"> Socratic Inquiry Drill</option>
+                </select>
+            </div>
+
+            <div class="character-toggle">
+                <label class="panel-label">Active Instructor:</label>
+                <div class="btn-row">
+                    <button id="talk-ciel" class="char-btn selected">Ciel</button>
+                    <button id="talk-neco" class="char-btn">Neco-Arc</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialog-box">
+            <div id="speaker-name">Ciel</div>
+            <div id="dialog-text">Welcome! Be sure to register to this class first by entering your API key! Your API key serves as your ID too so dont lose it.</div>
+
+            <div id="input-container">
+                <input type="text" id="user-input" placeholder="Input response or inquiry here..." disabled />
+                <button id="send-btn" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How to Get Your Gemini API Key</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                    <li>Sign in with your Google account</li>
+                    <li>Click <strong>"Create API Key"</strong></li>
+                    <li>Copy the key (starts with <code>AIza...</code>)</li>
+                    <li>Paste it into the input box at the top-left of this page</li>
+                    <li>Click <strong>"Initialize System"</strong> and start studying!</li>
+                </ol>
+                <div class="modal-note">
+                    <strong>Note:</strong> The free tier gives you limited daily requests. If you hit rate limits, the app automatically rotates through multiple models to keep you studying.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="mobile-toggle-btn" title="Toggle Desktop Mode">💻 Desktop</button>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
