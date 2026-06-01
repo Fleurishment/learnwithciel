@@ -53,14 +53,6 @@ Then open the generated URL on your mobile device.
 | **Reverse Tutor** | You teach Ciel — she asks clarifying questions |
 | **Socratic** | Guided inquiry through layered questions |
 
-## Character Personalities
-
-### Ciel-Sensei
-The seventh seat of the Holy Church's Burial Agency, undercover as your senpai. Gentle, systematic, and endlessly patient — though she'll tease you affectionately when you struggle. Obsessed with curry and uses cooking analogies for every concept. Switches to cold "Executor mode" when errors occur.
-
-### Neco-Arc
-A chaotic cat gremlin who makes zero sense but is somehow accidentally insightful. Says "nya" a lot. Do not trust her with math.
-
 ## Credits
 
 - **Ciel and Neco-Arc characters** are from *Tsukihime -A piece of blue glass moon-* by **TYPE-MOON**. All character assets, names, and likenesses are property of TYPE-MOON.
@@ -76,5 +68,5 @@ This project is provided as-is for educational purposes. Character assets belong
 
 ---
 
-NOTE:
+## NOTE:
 This project was just used to prototype AI API integration. Youre better off going to other sites like these if  youre really that serious about studying.., If it helps your grades get better somehow then im glad that this site helped lol
