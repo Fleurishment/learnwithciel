@@ -72,4 +72,6 @@ This project is provided as-is for educational purposes. Character assets belong
 ---
 
 ## NOTE:
-This project was just used to prototype AI API integration. Youre better off going to other sites like these if  youre really that serious about studying.., If it helps your grades get better somehow then im glad that this site helped lol
+This project was just used to prototype AI API integration. Youre better off going to other sites like these cuz setting this up for yourself is a hassle, If it helps your grades get better somehow then im glad that this site helped lol
+
+
